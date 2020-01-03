@@ -24,18 +24,16 @@ class Module01Exercise extends KoanSuite with Matchers {
      */
     class CalorieTracker {
 
-        /*
-        var dailyMax: Int = 0
-        var curretnDaily: Int = 0
-
-        def eat(cals: Int): Unit = {
-            currentDaily -= cals
-        }
-
-        def exercise(cals: Int): Unit = {
-            currentDaily += cals
-        }
-         */
+//        var dailyMax: Int = 0
+//        var curretnDaily: Int = 0
+//
+//        def eat(cals: Int): Unit = {
+//            currentDaily -= cals
+//        }
+//
+//        def exercise(cals: Int): Unit = {
+//            currentDaily += cals
+//        }
 
         private[this] var _dailyMax: Int = _
         private[this] var _currentDaily: Int = 0
@@ -62,7 +60,7 @@ class Module01Exercise extends KoanSuite with Matchers {
 
     }
 
-    test ("should be able to set daily and current calorie values") {
+    test("should be able to set daily and current calorie values") {
         val tracker = new CalorieTracker
         tracker.dailyMax = 2500 // should be fine
         tracker.currentDaily = 1200 // should also be fine
@@ -70,14 +68,14 @@ class Module01Exercise extends KoanSuite with Matchers {
         tracker.currentDaily should be (1200)
     }
 
-    test ("should enforce limits on daily") {
+    test("should enforce limits on daily") {
         val tracker = new CalorieTracker
         intercept[IllegalArgumentException] { tracker.dailyMax = 0 }
         intercept[IllegalArgumentException] { tracker.dailyMax = -100 }
         intercept[IllegalArgumentException] { tracker.dailyMax = 5000 } // should allow up to 4999 calories only
     }
 
-    test ("should enforce limits on setting current daily calories based on tracker max") {
+    test("should enforce limits on setting current daily calories based on tracker max") {
         val tracker1 = new CalorieTracker
         val tracker2 = new CalorieTracker
 
@@ -100,7 +98,7 @@ class Module01Exercise extends KoanSuite with Matchers {
         tracker2.currentDaily should be (2500)
     }
 
-    test ("should enforce limits on the eat and exercise methods too") {
+    test("should enforce limits on the eat and exercise methods too") {
         val tracker1 = new CalorieTracker
         val tracker2 = new CalorieTracker
 
@@ -162,10 +160,8 @@ class Module01Exercise extends KoanSuite with Matchers {
 
     object DBCache {
 
-        /*
-        val recipeCache = ???
-        def recipesForDoo(food: String): Future[List[String]] = ???
-         */
+//        val recipeCache = ???
+//        def recipesForDoo(food: String): Future[List[String]] = ???
 
         val recipeCache = CacheBuilder.newBuilder().build(
             new CacheLoader[String, Future[List[String]]] {
@@ -178,12 +174,10 @@ class Module01Exercise extends KoanSuite with Matchers {
         }
     }
 
-
-    test ("cache should not take a long time to retrieve recipes for the same food") {
-
+    test("cache should not take a long time to retrieve recipes for the same food") {
         val startTime = System.currentTimeMillis
 
-        val eggRecipes: Future[List[String]] = DBCache.recipesForFood("eggs")
+        val eggRecipes1: Future[List[String]] = DBCache.recipesForFood("eggs")
         val eggRecipes2: Future[List[String]] = DBCache.recipesForFood("eggs")
         val eggRecipes3: Future[List[String]] = DBCache.recipesForFood("eggs")
 
@@ -192,17 +186,18 @@ class Module01Exercise extends KoanSuite with Matchers {
         if ((System.currentTimeMillis - startTime) > 1000) fail("Took too long to do lookup from DB")
 
         // now check that the futures are all the same for the egg recipes (should be the same instance)
-        assert(eggRecipes eq eggRecipes2)
-        assert(eggRecipes eq eggRecipes3)
+        assert(eggRecipes1 eq eggRecipes2)
+        assert(eggRecipes1 eq eggRecipes3)
 
         // and getting the lists from all three of the egg recipes should take no more than around 1 second
-        Await.result(eggRecipes, 10.seconds) should be (List("omelette", "french toast", "poached eggs"))
+        Await.result(eggRecipes1, 10.seconds) should be (List("omelette", "french toast", "poached eggs"))
         Await.result(eggRecipes2, 10.seconds) should be (List("omelette", "french toast", "poached eggs"))
         Await.result(eggRecipes3, 10.seconds) should be (List("omelette", "french toast", "poached eggs"))
 
         println("Total time %d millis".format(System.currentTimeMillis - startTime))
 
-        if ((System.currentTimeMillis - startTime) > 1500) fail("Took too long, must be doing more than one DB lookup for eggs")
+        if ((System.currentTimeMillis - startTime) > 1500) fail(
+            "Took too long, must be doing more than one DB lookup for eggs")
     }
 
 }
