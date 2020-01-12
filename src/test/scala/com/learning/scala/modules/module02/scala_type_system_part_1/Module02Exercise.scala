@@ -1,6 +1,6 @@
 package com.learning.scala.modules.module02.scala_type_system_part_1
 
-import com.learning.scala.modules.module02.scala_type_system_part_1.testutil.KoanSuite
+import com.learning.scala.modules.testutil.KoanSuite
 import org.scalatest.{Matchers, SeveredStackTraces}
 
 /**

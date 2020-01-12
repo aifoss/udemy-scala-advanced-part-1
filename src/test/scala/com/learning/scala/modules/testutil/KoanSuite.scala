@@ -1,9 +1,9 @@
-package com.learning.scala.modules.module02.scala_type_system_part_1.testutil
+package com.learning.scala.modules.testutil
 
 import org.scalatest.FunSuite
 
 /**
- * Created by sofia on 2020-01-12.
+ * Created by sofia on 2020-01-02.
  */
 
 /**

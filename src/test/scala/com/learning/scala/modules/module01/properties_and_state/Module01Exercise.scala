@@ -1,7 +1,7 @@
 package com.learning.scala.modules.module01.properties_and_state
 
 import com.google.common.cache.{CacheBuilder, CacheLoader}
-import com.learning.scala.modules.module01.properties_and_state.testutil.KoanSuite
+import com.learning.scala.modules.testutil.KoanSuite
 import org.scalatest.Matchers
 
 import scala.concurrent.{Await, Future, duration}
